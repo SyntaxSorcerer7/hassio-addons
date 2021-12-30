@@ -141,9 +141,12 @@ def check_weight(user, weight):
 
 
 
-def uploadDataToGarmin(user, bone, fat, muscle, weight):
-    cmdCall = f"/opt/miscale/bodycomposition -b {bone} -f {fat} -w {weight} -m {muscle} -e {user.garmin_mail} -p {user.garmin_password}" 
+def uploadDataToGarmin(user, bone, fat, muscle, hydration, metabolic_age,weight):
+    cmdCall = f"/opt/miscale/bodycomposition -b {bone} -f {fat} -w {weight} -m {muscle} ---hydration {hydration} --metabolic-age {metabolic_age} -e {user.garmin_mail} -p {user.garmin_password}" 
     os.system(cmdCall)
+
+
+
 class ScanProcessor():
     def GetAge(self, d1):
         d1 = datetime.strptime(d1, "%Y-%m-%d")
@@ -224,7 +227,7 @@ class ScanProcessor():
             message += ',"protein":' + "{:.2f}".format(lib.getProteinPercentage())
             message += ',"body_type":"' + str(bodyscale[lib.getBodyType()]) + '"'
             message += ',"metabolic_age":' + "{:.0f}".format(lib.getMetabolicAge())
-            uploadDataToGarmin(matcheduser, lib.getBoneMass(), lib.getFatPercentage(), lib.getMuscleMass(), calcweight)
+            uploadDataToGarmin(matcheduser, lib.getBoneMass(), lib.getFatPercentage(), lib.getMuscleMass(), lib.getWaterPercentage(),bo,calcweight)
 
         message += ',"timestamp":"' + mitdatetime + '"'
         message += '}'

@@ -7,7 +7,7 @@ COPY bodycomposition /opt/miscale/
 RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
     bluez \
-    python3-pip \
+    python-pip \
     libglib2.0-dev && \
     rm -rf /var/lib/apt/lists/*
 
@@ -18,5 +18,6 @@ COPY dockerscripts/ /
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x /cmd.sh
+RUN chmod +x /opt/miscale/bodycomposition
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/cmd.sh"]
