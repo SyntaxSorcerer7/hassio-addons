@@ -1,0 +1,39 @@
+##
+## Build
+##
+FROM golang:1.16-buster AS build
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    git 
+
+RUN git clone https://github.com/davidkroell/bodycomposition.git \
+    && cd ./bodycomposition/cmd/bodycomposition \
+    && go build -o garmin \ 
+    && mv ./garmin /app
+
+
+
+FROM python:3.8-slim
+LABEL io.hass.version="0.2.6" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
+WORKDIR /opt/miscale
+COPY src /opt/miscale
+COPY --from=build /app/garmin /opt/miscale/
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    build-essential \
+    bluez \
+    python3-pip \
+    libglib2.0-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install -r requirements.txt
+
+# Copy in docker scripts to root of container...
+COPY dockerscripts/ /
+
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /cmd.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/cmd.sh"]

@@ -1,0 +1,88 @@
+{
+  "name": "Xiaomi Mi Scale",
+  "version": "0.2.6",
+  "slug": "xiaomi_mi_scale",
+  "description": "Read weight measurements from a Xiaomi bathroom scale via Bluetooth (BLE)",
+  "url": "https://github.com/lolouk44/xiaomi_mi_scale_ha_add_on",
+  "image": "lolouk44/xiaomi-mi-scale-ha-add-on",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "panel_admin": false,
+  "host_network": true,
+  "privileged": ["NET_ADMIN", "SYS_ADMIN"],
+
+  "options": {
+    "HCI_DEV": "hci0",
+    "BLUEPY_PASSIVE_SCAN": false,
+    "MISCALE_MAC": "00:00:00:00:00:00",
+    "MQTT_PREFIX": "miscale",
+    "MQTT_HOST": "192.168.0.1",
+    "MQTT_USERNAME": "user",
+    "MQTT_PASSWORD": "passwd",
+    "MQTT_PORT": 1883,
+    "TIME_INTERVAL": 30,
+    "MQTT_DISCOVERY": true,
+    "MQTT_DISCOVERY_PREFIX": "homeassistant",
+
+    "USERS": [
+        { 
+          "NAME": "Bob",
+          "SEX": "male",
+          "GT": 60,
+          "LT": 80,
+          "HEIGHT": 180,
+          "DOB": "1980-01-01"
+        },
+        { 
+          "NAME": "Mary",
+          "SEX": "female",
+          "GT": 40,
+          "LT": 60,
+          "HEIGHT": 160,
+          "DOB": "1990-01-01"
+        },
+        { 
+          "NAME": "Timmy",
+          "SEX": "male",
+          "GT": 20,
+          "LT": 40,
+          "HEIGHT": 120,
+          "DOB": "2010-01-01"
+        },
+        { 
+          "NAME": "Baby Sally",
+          "SEX": "female",
+          "GT": 1,
+          "LT": 20,
+          "HEIGHT": 50,
+          "DOB": "2020-01-01"
+        }
+    ]
+
+  },
+  "schema": {
+    "HCI_DEV": "str?",
+    "BLUEPY_PASSIVE_SCAN": "bool?",
+    "MISCALE_MAC": "str",
+    "MQTT_PREFIX": "str?",
+    "MQTT_HOST": "str",
+    "MQTT_USERNAME": "str?",
+    "MQTT_PASSWORD": "str?",
+    "MQTT_PORT": "int?",
+    "TIME_INTERVAL": "int?",
+    "MQTT_DISCOVERY": "bool?",
+    "MQTT_DISCOVERY_PREFIX": "str?",
+
+    "USERS": [
+      { 
+        "NAME": "str",
+        "SEX": "str",
+        "GT": "int",
+        "LT": "int",
+        "HEIGHT": "int",
+        "DOB": "str"
+      }
+    ]
+  }
+}
